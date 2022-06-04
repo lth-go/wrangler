@@ -6,14 +6,16 @@ import (
 )
 
 type CustomArgs struct {
-	Package      string
-	TypesByGroup map[schema.GroupVersion][]*types.Name
-	Options      Options
-	OutputBase   string
+	Package       string
+	SourcePackage string
+	TypesByGroup  map[schema.GroupVersion][]*types.Name
+	Options       Options
+	OutputBase    string
 }
 
 type Options struct {
 	OutputPackage string
+	SourcePackage string
 	Groups        map[string]Group
 	Boilerplate   string
 }

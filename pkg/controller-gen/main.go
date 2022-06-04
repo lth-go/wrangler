@@ -35,9 +35,10 @@ var (
 
 func Run(opts cgargs.Options) {
 	customArgs := &cgargs.CustomArgs{
-		Options:      opts,
-		TypesByGroup: map[schema.GroupVersion][]*types.Name{},
-		Package:      opts.OutputPackage,
+		Options:       opts,
+		TypesByGroup:  map[schema.GroupVersion][]*types.Name{},
+		Package:       opts.OutputPackage,
+		SourcePackage: opts.SourcePackage,
 	}
 
 	genericArgs := args.Default().WithoutDefaultFlagParsing()
@@ -118,6 +119,10 @@ func Run(opts cgargs.Options) {
 }
 
 func sourcePackagePath(customArgs *cgargs.CustomArgs, pkgName string) string {
+	if customArgs.SourcePackage != "" {
+		return filepath.Join(customArgs.OutputBase, customArgs.SourcePackage)
+	}
+
 	pkgSplit := strings.Split(pkgName, string(os.PathSeparator))
 	pkg := filepath.Join(customArgs.OutputBase, strings.Join(pkgSplit[:3], string(os.PathSeparator)))
 	return pkg
